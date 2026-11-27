@@ -1,0 +1,15 @@
+---
+/** /<city-slug>, e.g. /tel-aviv-yafo: the city's region, opened centred on the city. */
+import MapPage from "../components/MapPage.astro";
+import { CITIES } from "../../../pipeline/src/places.ts";
+import { standaloneRegions } from "../../../pipeline/src/hosting.ts";
+
+export function getStaticPaths() {
+  // a standalone site (SITE_REGIONS) has pages only for the cities of its regions
+  const only = standaloneRegions();
+  return Object.keys(CITIES).filter((city) => !only.length || only.includes(CITIES[city].region))
+    .map((city) => ({ params: { city }, props: { city } }));
+}
+const { city } = Astro.props;
+---
+<MapPage city={city} />

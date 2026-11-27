@@ -1,0 +1,14 @@
+// Grottammare isometrica on Cloudflare (Workers static assets, free plan): only the built site, no Worker code.
+// web/dist holds pages, tiles and data (SITE_REGIONS build). Deploy with `npm run deploy:site` after `npm run build`.
+// (wrangler.jsonc is the original Isometric World config: not used here.)
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "grottammare-isometrica",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./web/dist",
+    // unknown paths get 404.html, which sends /Grottammare to /grottammare
+    "not_found_handling": "404-page",
+    "html_handling": "drop-trailing-slash"
+  }
+}
